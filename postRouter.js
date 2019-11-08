@@ -100,7 +100,10 @@ router.route('/:id/comments')
     db.insertComment(newComment)
       .then(newId => {
         console.log(newId);
+        // making another call to database to get the comment itself,
+        // since insertion of comment returns only object with id associated with it:
         db.findCommentById(JSON.stringify(newId.id))
+          // destructuring object to get id
           .then(comment=> res.status(200).json(comment));
       })
       .catch(err => res.status(500).json(err));
